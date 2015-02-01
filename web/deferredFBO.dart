@@ -1,7 +1,6 @@
 library deferred;
 
 import 'dart:web_gl';
-import 'dart:js';
 
 class DeferredFBO {
 	Texture depthTex;

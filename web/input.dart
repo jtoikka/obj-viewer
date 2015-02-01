@@ -1,5 +1,0 @@
-library input;
-
-class Input {
-	
-}

@@ -69,7 +69,6 @@ class Renderer {
         shaderManager.attachTexture(gl, "post", "tex", 0);
 
         initScreenQuad(gl);
-//        initCube(gl);
         initPlane(gl);
 
         initCameraToClipMatrix(gl, width, height);
@@ -126,8 +125,8 @@ class Renderer {
 
         gl.uniform2f(texelSizeUnif, 1.0/width.toDouble(), 1.0/height.toDouble());
 
-
-        loadObj(window.location.origin + "/stanford_dragon/data/dragon3.obj", "teapot", gl);
+        print("Getting dragon");
+        loadObj(window.location.origin + "/data/dragon3.obj", "teapot", gl);
 
         gl.enable(CULL_FACE);
     	gl.cullFace(BACK);
@@ -426,6 +425,9 @@ ultimately rendering to the canvas's buffer.
 		gl.activeTexture(TEXTURE4);
 		gl.bindTexture(TEXTURE_2D, noiseTex);
 
+		gl.enableVertexAttribArray(program.vertex);
+		gl.enableVertexAttribArray(program.uv);
+
 		gl.bindBuffer(ARRAY_BUFFER, screenBuffer);
 		gl.vertexAttribPointer(program.vertex, 2, FLOAT, false, 0, 0);
 		gl.bindBuffer(ARRAY_BUFFER, screenUVBuffer);
@@ -442,6 +444,9 @@ ultimately rendering to the canvas's buffer.
 		gl.bindTexture(TEXTURE_2D, deferredFBO.finalTex);
 
 		gl.drawElements(TRIANGLES, 6, UNSIGNED_SHORT, 0);
+
+		gl.disableVertexAttribArray(program.vertex);
+		gl.disableVertexAttribArray(program.uv);
     }
 
 /*
@@ -459,6 +464,8 @@ only depth.
 
         setModelToCameraMatrix(gl, camera, program.unifs["modelToCam"]);
 
+        gl.enableVertexAttribArray(program.vertex);
+
         gl.bindBuffer(ARRAY_BUFFER, planeVertexBuffer);
         gl.vertexAttribPointer(program.vertex, 3, FLOAT, false, 0, 0);
 
@@ -475,6 +482,8 @@ only depth.
 		}
 		gl.colorMask(true, true, true, true);
 		gl.cullFace(BACK);
+
+		gl.disableVertexAttribArray(program.vertex);
     }
 
 /*
@@ -493,6 +502,9 @@ screen (see: renderToScreen()).
         gl.useProgram(program.handle);
 
         setModelToCameraMatrix(gl, camera, program.unifs["modelToCam"]);
+
+        gl.enableVertexAttribArray(program.vertex);
+        gl.enableVertexAttribArray(program.normal);
 
         gl.bindBuffer(ARRAY_BUFFER, planeVertexBuffer);
         gl.vertexAttribPointer(program.vertex, 3, FLOAT, false, 0, 0);
@@ -521,6 +533,9 @@ screen (see: renderToScreen()).
 			gl.drawElements(TRIANGLES, model.numIndices, UNSIGNED_SHORT, 0);
 		}
 
+		gl.disableVertexAttribArray(program.vertex);
+        gl.disableVertexAttribArray(program.normal);
+
 		renderToScreen(gl, camera, lightCam);
     }
 
@@ -531,12 +546,18 @@ screen (see: renderToScreen()).
     	var program = shaderManager.getProgram("sky");
     	gl.useProgram(program.handle);
 
+    	gl.enableVertexAttribArray(program.vertex);
+        gl.enableVertexAttribArray(program.uv);
+
     	gl.bindBuffer(ARRAY_BUFFER, screenBuffer);
 		gl.vertexAttribPointer(program.vertex, 2, FLOAT, false, 0, 0);
 		gl.bindBuffer(ARRAY_BUFFER, screenUVBuffer);
 		gl.vertexAttribPointer(program.uv, 2, FLOAT, false, 0, 0);
 		gl.bindBuffer(ELEMENT_ARRAY_BUFFER, screenIndexBuffer);
 		gl.drawElements(TRIANGLES, 6, UNSIGNED_SHORT, 0);
+
+		gl.disableVertexAttribArray(program.vertex);
+        gl.disableVertexAttribArray(program.uv);
     }
 
     static const int noiseSize = 4;

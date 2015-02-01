@@ -54,7 +54,7 @@ class ShaderManager {
         gl.useProgram(program);
 
         var vertexLocation = gl.getAttribLocation(program, "position");
-        gl.enableVertexAttribArray(vertexLocation);
+//        gl.enableVertexAttribArray(vertexLocation);
 
         ShaderProgram p = new ShaderProgram();
         p.handle = program;
@@ -63,14 +63,14 @@ class ShaderManager {
         var uvLocation = gl.getAttribLocation(program, "uv");
 
         if (uvLocation != -1) {
-            gl.enableVertexAttribArray(uvLocation);
+//            gl.enableVertexAttribArray(uvLocation);
             p.uv = uvLocation;
         }
 
         var normalLocation = gl.getAttribLocation(program, "normal");
 
         if (normalLocation != -1) {
-            gl.enableVertexAttribArray(normalLocation);
+//            gl.enableVertexAttribArray(normalLocation);
             p.normal = normalLocation;
         }
 

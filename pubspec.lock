@@ -4,14 +4,14 @@ packages:
   browser:
     description: browser
     source: hosted
-    version: "0.10.0"
+    version: "0.10.0+2"
   game_loop:
     description:
       ref: null
-      resolved-ref: "97599510a07d6f83d7af9aa2b725e918ffda3890"
+      resolved-ref: "3913f5b98790ca95dbd64d757451c40f5cfa903b"
       url: "https://github.com/johnmccutchan/game_loop.git"
     source: git
-    version: "0.9.3"
+    version: "0.9.4"
   obj:
     description:
       ref: null
